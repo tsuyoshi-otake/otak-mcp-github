@@ -1,0 +1,41 @@
+/**
+ * For more details on how to configure Wrangler, refer to:
+ * https://developers.cloudflare.com/workers/wrangler/configuration/
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "otak-mcp-github",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-05-09",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": "./public"
+	},
+	"observability": {
+		"enabled": true
+	},
+	
+	/**
+	 * KVネームスペース設定
+	 * OAuth認証情報を保存するためのKVネームスペース
+	 */
+	"kv_namespaces": [
+		{
+			"binding": "OAUTH_KV",
+			"id": "1b66b2ce665740c998fa46d6a178ab0c"
+		}
+	],
+	
+	/**
+	 * 環境変数
+	 * GitHub OAuthに必要な環境変数
+	 * 実際の値はwrangler secretコマンドで設定します
+	 */
+	"vars": {
+		"GITHUB_CLIENT_ID": "デプロイ時にシークレットで上書きされます",
+		"GITHUB_CLIENT_SECRET": "デプロイ時にシークレットで上書きされます"
+	}
+}
