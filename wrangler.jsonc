@@ -27,15 +27,5 @@
 			"binding": "OAUTH_KV",
 			"id": "1b66b2ce665740c998fa46d6a178ab0c"
 		}
-	],
-	
-	/**
-	 * 環境変数
-	 * GitHub OAuthに必要な環境変数
-	 * 実際の値はwrangler secretコマンドで設定します
-	 */
-	"vars": {
-		"GITHUB_CLIENT_ID": "デプロイ時にシークレットで上書きされます",
-		"GITHUB_CLIENT_SECRET": "デプロイ時にシークレットで上書きされます"
-	}
+	]
 }

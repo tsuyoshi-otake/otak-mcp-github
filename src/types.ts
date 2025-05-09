@@ -44,3 +44,39 @@ export interface AuthContext {
   // セッションID
   sessionId: string;
 }
+
+/**
+ * APIキー情報の型定義
+ */
+export interface ApiKeyInfo {
+  // APIキー識別子
+  id: string;
+  
+  // APIキー（ハッシュ化されたもの）
+  key: string;
+  
+  // 作成日時
+  createdAt: number;
+  
+  // 有効期限（UNIXタイムスタンプ）
+  expiresAt: number;
+  
+  // 作成したユーザー
+  createdBy: {
+    id: number;
+    login: string;
+    name: string;
+  };
+  
+  // 最終アクセス日時
+  lastAccessed?: number;
+  
+  // APIキーの名前（説明）
+  name: string;
+  
+  // APIキーの権限
+  permissions: string[];
+  
+  // 有効かどうか
+  isActive: boolean;
+}
