@@ -366,6 +366,8 @@ async function showAdminDashboard(sessionId: string, origin: string, env: Env): 
           h1 { color: #24292e; }
           .user-info { display: flex; align-items: center; margin-bottom: 20px; }
           .user-info img { width: 50px; height: 50px; border-radius: 25px; margin-right: 15px; }
+          .user-info h1 { margin-bottom: 5px; }
+          .user-info p { margin-top: 0; }
           table { width: 100%; border-collapse: collapse; margin: 20px 0; }
           table th, table td { padding: 12px; text-align: left; border-bottom: 1px solid #e1e4e8; }
           form { margin: 20px 0; padding: 20px; background: #f6f8fa; border-radius: 6px; }
