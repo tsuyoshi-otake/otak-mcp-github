@@ -1,0 +1,24 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "otak-mcp-test",
+    "main": "src/index.ts",
+    "compatibility_date": "2025-05-10",
+    "compatibility_flags": ["nodejs_compat"],
+    "migrations": [
+        {
+            "tag": "v_sqlite_enabled", // 新しいタグ名
+            "new_sqlite_classes": ["MyMCP"] // MyMCPをSQLite対応クラスとして新規作成
+        }
+    ],
+    "durable_objects": {
+        "bindings": [
+            {
+                "class_name": "MyMCP", // クラス名を元に戻す
+                "name": "MCP_OBJECT"  // バインディング名を元に戻す
+            }
+        ]
+    },
+    "observability": {
+        "enabled": true
+    }
+}

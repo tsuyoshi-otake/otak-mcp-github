@@ -1,0 +1,16 @@
+name = "otak-mcp-test"
+main = "src/index.ts"
+compatibility_date = "2025-05-10"
+compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = "npm run build"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["MyMCP"]
+
+[durable_objects]
+bindings = [
+  { name = "MCP_OBJECT", class_name = "MyMCP" }
+]

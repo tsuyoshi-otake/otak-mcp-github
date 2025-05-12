@@ -1,0 +1,21 @@
+{
+  "name": "otak-mcp-test",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev",
+    "build": "wrangler build",
+    "test:sse": "node test-sse.js"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240208.0",
+    "node-fetch": "^3.3.0",
+    "typescript": "^5.0.4",
+    "wrangler": "^4.14.4"
+  },
+  "dependencies": {
+    "zod": "^3.24.4"
+  }
+}
