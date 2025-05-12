@@ -1,13 +1,16 @@
 {
   "mcpServers": {
-    "otak-mcp": {
+    "otak-mcp-test": {
       "command": "npx",
       "args": [
         "mcp-remote",
         "https://otak-mcp-test.tsuyoshi-otake.workers.dev/sse"
       ],
       "disabled": false,
-      "alwaysAllow": []
+      "alwaysAllow": [
+        "dice_roll",
+        "weather"
+      ]
     }
   }
 }
