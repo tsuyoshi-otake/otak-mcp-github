@@ -1,0 +1,29 @@
+name = "otak-mcp-pmbok"
+main = "src/index.ts"
+compatibility_date = "2025-05-10"
+compatibility_flags = ["nodejs_compat"]
+
+# Module rule for .md files
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+# fallthrough = false # Optional: Explicitly prevent falling through to default rules
+
+[[migrations]]
+tag = "v_sqlite_enabled" # 新しいタグ名
+new_sqlite_classes = ["MyMCP"] # MyMCPをSQLite対応クラスとして新規作成
+
+[durable_objects]
+bindings = [
+  { name = "MCP_OBJECT", class_name = "MyMCP" } # クラス名とバインディング名を元に戻す
+]
+
+[ai]
+binding = "AI"
+
+[[vectorize]]
+binding = "VECTORIZE_INDEX"
+index_name = "pmbok-index"
+
+[observability]
+enabled = true
