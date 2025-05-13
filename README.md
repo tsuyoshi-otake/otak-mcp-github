@@ -126,3 +126,81 @@ After launching, access it in your browser at `http://127.0.0.1:6274`.
 *   **Run Tool:** Execute a tool with specified parameters.
 
 For more detailed debugging techniques, refer to [`.roo/rules/1-debug.md`](.roo/rules/1-debug.md:1).
+---
+
+# otak-mcp-pmbok
+
+This project is an MCP server designed to answer questions about the Project Management Body of Knowledge (PMBOK) using a Retrieval-Augmented Generation (RAG) approach. It leverages Cloudflare Workers AI and Vectorize.
+
+## Overview
+
+Based on the `otak-mcp-test` structure, this Worker imports PMBOK content (from [`otak-mcp-pmbok/pmbok.md`](otak-mcp-pmbok/pmbok.md)), chunks and vectorizes it upon the first request, and stores the embeddings in a Cloudflare Vectorize index (`pmbok-index`). It provides an MCP tool (`ask_pmbok`) to query this knowledge base.
+
+## Features
+
+*   **MCP Server:** Implementation using `@modelcontextprotocol/sdk`.
+*   **Transports:** Supports Streamable HTTP (`/mcp`). SSE might work but is untested for this specific RAG implementation.
+*   **RAG Pipeline:**
+    *   Uses Cloudflare Workers AI (`@cf/baai/bge-base-en-v1.5`) for text embeddings.
+    *   Uses Cloudflare Vectorize for similarity search.
+    *   Uses Cloudflare Workers AI (`@cf/meta/llama-3-8b-instruct`) for answer generation based on retrieved context.
+*   **Provided Tools:**
+    *   `ask_pmbok`: Answers questions about PMBOK based on the content in [`pmbok.md`](otak-mcp-pmbok/pmbok.md).
+        *   Input Schema: `{ query: string }`
+
+## Setup and Execution
+
+Similar to `otak-mcp-test`, but navigate to the [`otak-mcp-pmbok`](otak-mcp-pmbok) directory.
+
+### 1. Install Dependencies
+
+```bash
+cd otak-mcp-pmbok
+npm install
+```
+
+### 2. Create Vectorize Index (if not done automatically by deploy)
+
+The Worker expects a Vectorize index named `pmbok-index`. If the first deployment fails due to a missing index, create it manually:
+
+```bash
+# Ensure you are in the otak-mcp-pmbok directory
+npx wrangler vectorize create pmbok-index --dimensions=768 --metric=cosine
+```
+*(Note: The embedding model `@cf/baai/bge-base-en-v1.5` outputs 768 dimensions, and `cosine` is suitable for text similarity.)*
+
+### 3. Deployment
+
+```bash
+# Ensure you are in the otak-mcp-pmbok directory
+npm run deploy
+# or
+npx wrangler deploy
+```
+The first request after deployment will trigger the vectorization and indexing process, which might take some time.
+
+### 4. Testing
+
+Use the MCP Inspector (`npx @modelcontextprotocol/inspector`) to connect to the deployed Worker's `/mcp` endpoint (e.g., `https://otak-mcp-pmbok.your-subdomain.workers.dev/mcp`) and test the `ask_pmbok` tool.
+
+## Configuration
+
+Configuration is managed in [`otak-mcp-pmbok/wrangler.toml`](otak-mcp-pmbok/wrangler.toml). Key additions include:
+
+*   `rules`: Defines how to load `.md` files as text.
+*   `ai`: Binding for Cloudflare Workers AI.
+*   `vectorize`: Binding for the `pmbok-index` Vectorize index.
+
+## Source Code (`otak-mcp-pmbok/src`)
+
+*   **[`index.ts`](otak-mcp-pmbok/src/index.ts):** Main Worker entry point, routes requests to the Durable Object.
+*   **[`MyMcp.ts`](otak-mcp-pmbok/src/MyMcp.ts):** Implements the Durable Object, MCP server, RAG pipeline, and the `ask_pmbok` tool. Handles dynamic vectorization and indexing on first load.
+*   **[`types/assets.d.ts`](otak-mcp-pmbok/src/types/assets.d.ts):** TypeScript definitions for importing `.md` files.
+
+## Debugging
+
+Use `wrangler tail` to view real-time logs:
+
+```bash
+npx wrangler tail otak-mcp-pmbok --format pretty
+```
