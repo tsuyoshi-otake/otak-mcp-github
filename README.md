@@ -223,9 +223,7 @@ This project is a C# implementation of an MCP server that provides various syste
     *   `GetCurrentDirectory`: Returns the current working directory.
     *   `ListFiles`: Lists files and directories in a specified path.
     *   `ExecuteCommand`: Executes a command-line command and returns its output.
-    *   `WriteLog`: Writes a message to the log file.
-    *   `TailLog`: Retrieves the latest lines from the log file.
-    *   `GetLogPath`: Returns the path to the log file.
+    *   `ReadFiles`: Reads the content of a specified file.
 
 ## Tech Stack
 

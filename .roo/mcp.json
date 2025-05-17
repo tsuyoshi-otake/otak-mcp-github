@@ -12,11 +12,9 @@
       "env": {},
       "alwaysAllow": [
         "ListFiles",
-        "TailLog",
-        "WriteLog",
         "GetCurrentDirectory",
-        "GetLogPath",
-        "ExecuteCommand"
+        "ExecuteCommand",
+        "ReadFiles"
       ],
       "disabled": false
     }
