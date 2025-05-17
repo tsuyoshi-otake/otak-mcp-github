@@ -271,49 +271,8 @@ Example request format:
 }
 ```
 
-## Testing otak-mcp-commander
-
-A dedicated test project `otak-mcp-commander.Tests` is provided to test the functionality of the MCP server.
-
-### Test Project Features
-
-* **McpStdioClient**: A client implementation that can communicate with the MCP server via stdio.
-* **SimpleCommanderTests**: Tests that verify the functionality of each MCP tool.
-* **Robust Error Handling**: The test framework handles non-JSON output (like log messages) and provides fallback mechanisms.
-
-### Running the Tests
-
-To run the tests, navigate to the test project directory and use the `dotnet test` command:
-
-```bash
-cd otak-mcp-commander.Tests
-dotnet test
-```
-
-For running specific test classes:
-
-```bash
-dotnet test --filter FullyQualifiedName~SimpleCommanderTests
-```
-
-### Test Implementation Details
-
-The test project includes:
-
-* **McpStdioClient.cs**: A client that handles process management, input/output communication, and JSON-RPC formatting.
-* **SimpleCommanderTests.cs**: Tests for each tool provided by the MCP server, including error cases.
-* **CommanderToolsTests.cs**: More comprehensive tests with detailed verification.
-
-The tests handle the complexity of stdio-based communication by:
-1. Spawning the MCP server as a child process
-2. Writing requests to the process's standard input
-3. Reading and parsing responses from standard output
-4. Filtering log messages and extracting valid JSON responses
-5. Providing mock responses when necessary for test robustness
 
 ## Source Code
 
 *   **[`Program.cs`](otak-mcp-commander/Program.cs):** Main entry point that configures and starts the MCP server.
 *   **[`CommanderTool.cs`](otak-mcp-commander/CommanderTool.cs):** Implements the MCP tools and their execution logic.
-*   **[`otak-mcp-commander.Tests/McpStdioClient.cs`](otak-mcp-commander.Tests/McpStdioClient.cs):** Client implementation for testing the MCP server.
-*   **[`otak-mcp-commander.Tests/SimpleCommanderTests.cs`](otak-mcp-commander.Tests/SimpleCommanderTests.cs):** Tests for the MCP server tools.

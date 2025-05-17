@@ -97,3 +97,4 @@ C:\Codes\tsuyoshi-otake-system-exe-jp\otak-mcp-servers\otak-mcp-commander\obj\De
 C:\Codes\tsuyoshi-otake-system-exe-jp\otak-mcp-servers\otak-mcp-commander\obj\Debug\net9.0\otak-mcp-commander.pdb
 C:\Codes\tsuyoshi-otake-system-exe-jp\otak-mcp-servers\otak-mcp-commander\obj\Debug\net9.0\otak-mcp-commander.genruntimeconfig.cache
 C:\Codes\tsuyoshi-otake-system-exe-jp\otak-mcp-servers\otak-mcp-commander\obj\Debug\net9.0\ref\otak-mcp-commander.dll
+C:\Codes\tsuyoshi-otake-system-exe-jp\otak-mcp-servers\otak-mcp-commander\bin\Debug\net9.0\otak-mcp-commander.runtimeconfig.dev.json

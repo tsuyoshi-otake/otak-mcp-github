@@ -18,7 +18,7 @@
         "GetLogPath",
         "ExecuteCommand"
       ],
-      "disabled": true
+      "disabled": false
     }
   }
 }

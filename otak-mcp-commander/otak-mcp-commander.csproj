@@ -7,6 +7,15 @@
     <RootNamespace>OtakMcpCommander</RootNamespace>
     <OutputType>Exe</OutputType>
     <UseAppHost>true</UseAppHost>
+    <!-- ビルド時の警告を抑制 -->
+    <SuppressAspNetCoreMvcProjectReferenceGeneratePathProperty>true</SuppressAspNetCoreMvcProjectReferenceGeneratePathProperty>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
+  </PropertyGroup>
+
+  <!-- ビルド中のファイルロック警告を抑制 -->
+  <PropertyGroup>
+    <MSBuildWarningsAsMessages>MSB3026;MSB3027</MSBuildWarningsAsMessages>
   </PropertyGroup>
 
   <ItemGroup>
