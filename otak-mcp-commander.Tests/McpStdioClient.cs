@@ -73,6 +73,9 @@ namespace OtakMcpCommander.Tests
         /// <summary>
         /// 指定されたMCPサーバー実行ファイルへのパスを使用してクライアントを初期化します
         /// </summary>
+        /// <summary>
+        /// 指定されたMCPサーバー実行ファイルへのパスを使用してクライアントを初期化します
+        /// </summary>
         public McpStdioClient(string mcpServerExecutablePath, Action<string> logHandler = null)
         {
             _logHandler = logHandler ?? (msg => { /* デフォルトは何もしない */ });
@@ -94,6 +97,23 @@ namespace OtakMcpCommander.Tests
             
             // サーバーの起動を待つ
             Task.Delay(1000).Wait();
+        }
+
+        /// <summary>
+        /// 既に起動済みのプロセスを使用してクライアントを初期化します
+        /// </summary>
+        public McpStdioClient(Process serverProcess, Action<string> logHandler = null)
+        {
+            _logHandler = logHandler ?? (msg => { /* デフォルトは何もしない */ });
+            _serverProcess = serverProcess;
+            
+            // プロセスが既に起動されていないことを確認
+            if (_serverProcess.HasExited || !_serverProcess.StartInfo.RedirectStandardInput)
+            {
+                _serverProcess.Start();
+                // サーバーの起動を待つ
+                Task.Delay(1000).Wait();
+            }
         }
 
         /// <summary>

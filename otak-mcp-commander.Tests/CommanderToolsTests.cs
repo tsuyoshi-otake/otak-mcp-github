@@ -63,36 +63,28 @@ namespace OtakMcpCommander.Tests
         {
             _output = output;
             
-            // MCPサーバープロセスの開始
-            var buildConfiguration = "Debug"; // または Release
-            var mcpServerPath = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                "..",
-                "..",
-                "..",
-                "..",
-                "otak-mcp-commander",
-                "bin",
-                buildConfiguration,
-                "net9.0",
-                "otak-mcp-commander.exe");
-
-            _output.WriteLine($"MCP Server Path: {mcpServerPath}");
-
+            // MCPサーバープロセスの開始（dotnet runを使用）
             _mcpProcess = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = mcpServerPath,
+                    FileName = "dotnet",
+                    Arguments = "run --project ../../../otak-mcp-commander/otak-mcp-commander.csproj --no-build",
                     UseShellExecute = false,
                     RedirectStandardInput = true,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
-                    CreateNoWindow = true
+                    CreateNoWindow = true,
+                    WorkingDirectory = Directory.GetCurrentDirectory()
                 }
             };
 
+            _output.WriteLine("Starting MCP server using 'dotnet run'");
+
             _mcpProcess.Start();
+            
+            // プロセスが起動するまで少し待機
+            Task.Delay(1000).Wait();
             
             // 標準エラー出力を非同期で読み取り、テスト出力に転送
             _mcpProcess.ErrorDataReceived += (sender, args) =>

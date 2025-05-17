@@ -18,24 +18,32 @@ namespace OtakMcpCommander.Tests
         {
             _output = output;
 
-            // MCPサーバー実行ファイルのパスを取得
-            var buildConfiguration = "Debug"; // または Release
-            var mcpServerPath = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                "..",
-                "..",
-                "..",
-                "..",
-                "otak-mcp-commander",
-                "bin",
-                buildConfiguration,
-                "net9.0",
-                "otak-mcp-commander.exe");
+            // MCPサーバーを実行
+            var mcpProcess = new System.Diagnostics.Process
+            {
+                StartInfo = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "dotnet",
+                    Arguments = "run --project ../../../otak-mcp-commander/otak-mcp-commander.csproj --no-build",
+                    UseShellExecute = false,
+                    RedirectStandardInput = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+                    WorkingDirectory = Directory.GetCurrentDirectory()
+                }
+            };
 
-            _output.WriteLine($"Starting MCP server from: {mcpServerPath}");
+            _output.WriteLine("Starting MCP server using 'dotnet run'");
+            
+            // プロセスを明示的に起動
+            mcpProcess.Start();
+            
+            // プロセスが起動するまで少し待機
+            Task.Delay(1000).Wait();
 
-            // クライアントを初期化（ログハンドラを渡す）
-            _client = new McpStdioClient(mcpServerPath, msg => _output.WriteLine($"CLIENT LOG: {msg}"));
+            // クライアントを初期化（既に起動済みのdotnet runプロセスを使用）
+            _client = new McpStdioClient(mcpProcess, msg => _output.WriteLine($"CLIENT LOG: {msg}"));
             
             // エラー出力ハンドラを設定
             _client.SetupErrorDataHandler(errorMessage => _output.WriteLine($"MCP ERROR: {errorMessage}"));

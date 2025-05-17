@@ -17,7 +17,8 @@
         "GetCurrentDirectory",
         "GetLogPath",
         "ExecuteCommand"
-      ]
+      ],
+      "disabled": true
     }
   }
 }
