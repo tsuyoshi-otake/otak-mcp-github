@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("otak-mcp-commander")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("otak-mcp-commander.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee189c115baad1b494278a2a6b5b088a77c96023")]
-[assembly: System.Reflection.AssemblyProductAttribute("otak-mcp-commander")]
-[assembly: System.Reflection.AssemblyTitleAttribute("otak-mcp-commander")]
+[assembly: System.Reflection.AssemblyProductAttribute("otak-mcp-commander.Tests")]
+[assembly: System.Reflection.AssemblyTitleAttribute("otak-mcp-commander.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // MSBuild WriteCodeFragment クラスによって生成されました。
