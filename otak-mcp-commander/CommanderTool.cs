@@ -202,9 +202,9 @@ public class CommanderTools
             using (var stream = new FileStream(LogFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             using (var reader = new StreamReader(stream))
             {
-                string line;
                 var tempList = new List<string>();
                 
+                string? line;
                 while ((line = await reader.ReadLineAsync()) != null)
                 {
                     tempList.Add(line);

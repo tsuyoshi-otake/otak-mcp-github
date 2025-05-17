@@ -1,13 +1,23 @@
 {
   "mcpServers": {
     "otak-mcp-commander": {
-        "type": "stdio",
-        "command": "dotnet",
-        "args": [
-            "./bin/Debug/net9.0/otak-mcp-commander.dll"
-        ],
-        "cwd": "./otak-mcp-commander",
-        "env": {}
+      "type": "stdio",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "./otak-mcp-commander/otak-mcp-commander.csproj",
+        "--no-build"
+      ],
+      "env": {},
+      "alwaysAllow": [
+        "ListFiles",
+        "TailLog",
+        "WriteLog",
+        "GetCurrentDirectory",
+        "GetLogPath",
+        "ExecuteCommand"
+      ]
     }
   }
 }
