@@ -4,7 +4,7 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "otak-mcp-commander", "otak-mcp-commander", "{53BDC28B-6309-5401-335C-487E00C0A241}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "otak-mcp-commander", "otak-mcp-commander\otak-mcp-commander\otak-mcp-commander.csproj", "{9E570D32-E829-9A2E-2EC3-0A2FB37533D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "otak-mcp-commander", "otak-mcp-commander\otak-mcp-commander.csproj", "{9E570D32-E829-9A2E-2EC3-0A2FB37533D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

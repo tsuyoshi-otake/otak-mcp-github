@@ -21,9 +21,10 @@ File.AppendAllText(mcpLogFilePath, $"[SERVER] {DateTime.Now:yyyy-MM-dd HH:mm:ss}
 
 var builder = Host.CreateApplicationBuilder(args);
 
-// Configure logging
+// Configure logging - don't use console logging as it interferes with MCP protocol
 builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
+// Remove console logging to avoid interference with MCP stdio protocol
+// builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 // Register tools explicitly

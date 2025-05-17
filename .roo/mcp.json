@@ -1,16 +1,13 @@
 {
   "mcpServers": {
-    "otak-mcp-test": {
-      "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://otak-mcp-test.tsuyoshi-otake.workers.dev/sse"
-      ],
-      "disabled": false,
-      "alwaysAllow": [
-        "dice_roll",
-        "weather"
-      ]
+    "otak-mcp-commander": {
+        "type": "stdio",
+        "command": "dotnet",
+        "args": [
+            "./bin/Debug/net9.0/otak-mcp-commander.dll"
+        ],
+        "cwd": "./otak-mcp-commander",
+        "env": {}
     }
   }
 }
