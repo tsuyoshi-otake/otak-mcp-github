@@ -1,4 +1,4 @@
-# otak-mcp-test
+# otak-mcp-servers
 
 This is a test project for a Model Context Protocol (MCP) server built using Cloudflare Workers and Durable Objects. It supports both Server-Sent Events (SSE) and Streamable HTTP transports.
 
