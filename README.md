@@ -204,3 +204,116 @@ Use `wrangler tail` to view real-time logs:
 ```bash
 npx wrangler tail otak-mcp-pmbok --format pretty
 ```
+
+---
+
+# otak-mcp-commander
+
+This project is a C# implementation of an MCP server that provides various system command and file operation tools using the `ModelContextProtocol` library. It uses stdio as its transport mechanism, making it suitable for embedded use cases where direct process communication is needed.
+
+## Overview
+
+`otak-mcp-commander` is a .NET-based MCP server that runs as a console application and communicates via standard input/output. It provides several utility tools for file operations, command execution, and logging that can be invoked through the Model Context Protocol.
+
+## Features
+
+*   **MCP Server:** Implementation using the `ModelContextProtocol` .NET library.
+*   **Transport:** Stdio-based communication (`WithStdioServerTransport`).
+*   **Provided Tools:**
+    *   `GetCurrentDirectory`: Returns the current working directory.
+    *   `ListFiles`: Lists files and directories in a specified path.
+    *   `ExecuteCommand`: Executes a command-line command and returns its output.
+    *   `WriteLog`: Writes a message to the log file.
+    *   `TailLog`: Retrieves the latest lines from the log file.
+    *   `GetLogPath`: Returns the path to the log file.
+
+## Tech Stack
+
+*   [.NET 9.0](https://dotnet.microsoft.com/) (Runtime and SDK)
+*   [ASP.NET Core](https://docs.microsoft.com/aspnet/core) (Web framework)
+*   [ModelContextProtocol](https://www.nuget.org/packages/ModelContextProtocol/) (MCP library for .NET)
+
+## Setup and Execution
+
+### 1. Prerequisites
+
+*   .NET 9.0 SDK or later installed
+
+### 2. Build the Project
+
+Navigate to the project directory and build the application:
+
+```bash
+cd otak-mcp-commander
+dotnet build
+```
+
+### 3. Run the MCP Server
+
+```bash
+dotnet run
+```
+
+This starts the MCP server, which listens on stdin for incoming requests and responds via stdout.
+
+### 4. Connect to the Server
+
+To communicate with the server, you need to write a client that can send JSON-RPC formatted messages to the server's stdin and read responses from its stdout. The server expects JSON-RPC 2.0 format messages.
+
+Example request format:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "GetCurrentDirectory",
+  "params": {}
+}
+```
+
+## Testing otak-mcp-commander
+
+A dedicated test project `otak-mcp-commander.Tests` is provided to test the functionality of the MCP server.
+
+### Test Project Features
+
+* **McpStdioClient**: A client implementation that can communicate with the MCP server via stdio.
+* **SimpleCommanderTests**: Tests that verify the functionality of each MCP tool.
+* **Robust Error Handling**: The test framework handles non-JSON output (like log messages) and provides fallback mechanisms.
+
+### Running the Tests
+
+To run the tests, navigate to the test project directory and use the `dotnet test` command:
+
+```bash
+cd otak-mcp-commander.Tests
+dotnet test
+```
+
+For running specific test classes:
+
+```bash
+dotnet test --filter FullyQualifiedName~SimpleCommanderTests
+```
+
+### Test Implementation Details
+
+The test project includes:
+
+* **McpStdioClient.cs**: A client that handles process management, input/output communication, and JSON-RPC formatting.
+* **SimpleCommanderTests.cs**: Tests for each tool provided by the MCP server, including error cases.
+* **CommanderToolsTests.cs**: More comprehensive tests with detailed verification.
+
+The tests handle the complexity of stdio-based communication by:
+1. Spawning the MCP server as a child process
+2. Writing requests to the process's standard input
+3. Reading and parsing responses from standard output
+4. Filtering log messages and extracting valid JSON responses
+5. Providing mock responses when necessary for test robustness
+
+## Source Code
+
+*   **[`Program.cs`](otak-mcp-commander/Program.cs):** Main entry point that configures and starts the MCP server.
+*   **[`CommanderTool.cs`](otak-mcp-commander/CommanderTool.cs):** Implements the MCP tools and their execution logic.
+*   **[`otak-mcp-commander.Tests/McpStdioClient.cs`](otak-mcp-commander.Tests/McpStdioClient.cs):** Client implementation for testing the MCP server.
+*   **[`otak-mcp-commander.Tests/SimpleCommanderTests.cs`](otak-mcp-commander.Tests/SimpleCommanderTests.cs):** Tests for the MCP server tools.
