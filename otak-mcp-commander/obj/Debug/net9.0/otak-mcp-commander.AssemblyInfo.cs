@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("otak-mcp-commander")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+95289cc19463eca7d8efdd52ff866bcd9e0e437c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24d36c1ea784a744bc41a1c782c81740f63876c7")]
 [assembly: System.Reflection.AssemblyProductAttribute("otak-mcp-commander")]
 [assembly: System.Reflection.AssemblyTitleAttribute("otak-mcp-commander")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
