@@ -1,0 +1,21 @@
+name: otak-mcp-commander
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: otak-mcp-commander
+    type: stdio
+    command: dotnet
+    args:
+      - run
+      - --project
+      - C:\Codes\tsuyoshi-otake-system-exe-jp\otak-mcp-servers\otak-mcp-commander\otak-mcp-commander.csproj
+      - --no-build
+    env: {}
+    alwaysAllow:
+      - ListFiles
+      - TailLog
+      - WriteLog
+      - GetCurrentDirectory
+      - GetLogPath
+      - ExecuteCommand
+    disabled: false

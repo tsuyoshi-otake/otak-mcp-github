@@ -116,8 +116,8 @@ public class CommanderTools
             
             var startInfo = new System.Diagnostics.ProcessStartInfo
             {
-                FileName = "cmd.exe",
-                Arguments = $"/c {command}",
+                FileName = "powershell.exe",
+                Arguments = $"-Command \"{command}\"",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
@@ -159,98 +159,31 @@ public class CommanderTools
     }
 
     [McpServerTool]
-    public async Task<string> WriteLog(
-        [Description("The log message to write")] string message)
+    public async Task<string> ReadFiles(
+        [Description("The path of the file to read")] string path)
     {
         try
         {
-            var params_info = new { Message = message };
-            string logEntry = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
+            var params_info = new { Path = path };
             
-            await File.AppendAllTextAsync(LogFilePath, logEntry + Environment.NewLine);
-            
-            string result = $"Log message written: {logEntry}";
-            LogToolExecution(nameof(WriteLog), params_info, result);
-            return result;
-        }
-        catch (Exception ex)
-        {
-            string error = $"Failed to write log: {ex.Message}";
-            LogToolExecution(nameof(WriteLog), new { Message = message }, $"ERROR: {error}");
-            return error;
-        }
-    }
-
-    [McpServerTool]
-    public async Task<string> TailLog(
-        [Description("Number of lines to read from the end (optional)")] int? lines = 10)
-    {
-        try
-        {
-            var params_info = new { Lines = lines };
-            
-            if (!File.Exists(LogFilePath))
+            if (!File.Exists(path))
             {
-                string error = $"Log file does not exist at {LogFilePath}";
-                LogToolExecution(nameof(TailLog), params_info, $"ERROR: {error}");
+                string error = $"File does not exist at {path}";
+                LogToolExecution(nameof(ReadFiles), params_info, $"ERROR: {error}");
                 return error;
             }
 
-            int lineCount = lines ?? 10;
-            var logLines = new List<string>();
+            string content = await File.ReadAllTextAsync(path);
             
-            using (var stream = new FileStream(LogFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-            using (var reader = new StreamReader(stream))
-            {
-                var tempList = new List<string>();
-                
-                string? line;
-                while ((line = await reader.ReadLineAsync()) != null)
-                {
-                    tempList.Add(line);
-                    if (tempList.Count > lineCount)
-                    {
-                        tempList.RemoveAt(0);
-                    }
-                }
-                
-                logLines = tempList;
-            }
-
-            string result;
-            if (logLines.Count == 0)
-            {
-                result = "Log file is empty";
-                LogToolExecution(nameof(TailLog), params_info, result);
-                return result;
-            }
-
-            var sb = new StringBuilder();
-            sb.AppendLine($"Last {logLines.Count} lines from {LogFilePath}:");
-            sb.AppendLine();
-            
-            foreach (var line in logLines)
-            {
-                sb.AppendLine(line);
-            }
-
-            result = sb.ToString();
-            LogToolExecution(nameof(TailLog), params_info, $"Retrieved {logLines.Count} lines");
+            string result = $"File content of {path}:\n\n{content}";
+            LogToolExecution(nameof(ReadFiles), params_info, $"Read {content.Length} bytes from file");
             return result;
         }
         catch (Exception ex)
         {
-            string error = $"Failed to read log: {ex.Message}";
-            LogToolExecution(nameof(TailLog), new { Lines = lines }, $"EXCEPTION: {error}");
+            string error = $"Failed to read file: {ex.Message}";
+            LogToolExecution(nameof(ReadFiles), new { Path = path }, $"EXCEPTION: {error}");
             return error;
         }
-    }
-
-    [McpServerTool]
-    public string GetLogPath()
-    {
-        string result = $"Log file location: {LogFilePath}";
-        LogToolExecution(nameof(GetLogPath), new { }, result);
-        return result;
     }
 }
