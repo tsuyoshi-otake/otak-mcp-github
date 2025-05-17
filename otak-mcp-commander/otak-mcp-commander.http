@@ -1,0 +1,6 @@
+@otak_mcp_commander_HostAddress = http://localhost:5076
+
+GET {{otak_mcp_commander_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
